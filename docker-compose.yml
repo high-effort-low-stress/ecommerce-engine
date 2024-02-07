@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    container_name: db-ecommerce_engine
+    restart: always
+    ports:
+      - "5432:5432"
+    deploy:
+      resources:
+        limits:
+          memory: 1024M
+
+    environment:
+      POSTGRES_DB: "ecommerce_engine"
+      POSTGRES_PASSWORD: "1234"
+    volumes:
+      - "./src/main/resources/sql/:/docker-entrypoint-initdb.d"
