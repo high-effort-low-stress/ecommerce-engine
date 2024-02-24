@@ -1,4 +1,4 @@
-package com.hels.ecommerceengine.customer.entity;
+package com.hels.ecommerceengine.modules.customer.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +32,6 @@ public class CustomerEntity {
     private LocalDate birthDate;
     @Column(name = "is_active", nullable = false)
     private boolean isActive = true;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-    private List<AddressesEntity> addresses;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+//    private List<AddressesEntity> addresses;
 }
