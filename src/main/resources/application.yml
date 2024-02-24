@@ -10,5 +10,4 @@ spring:
     format_sql: true
     properties:
       hibernate:
-        ddl-auto: update
         dialect: org.hibernate.dialect.PostgreSQLDialect
