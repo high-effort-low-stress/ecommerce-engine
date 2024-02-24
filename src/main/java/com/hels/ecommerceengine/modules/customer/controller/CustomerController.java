@@ -29,5 +29,4 @@ public class CustomerController {
     public List<CustomerEntity> findAll () {
         return repository.findAll();
     }
-
 }
