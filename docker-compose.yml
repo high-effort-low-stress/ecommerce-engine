@@ -14,6 +14,7 @@ services:
 
     environment:
       POSTGRES_DB: "ecommerce_engine"
-      POSTGRES_PASSWORD: "1234"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "admin"
     volumes:
       - "./src/main/resources/sql/:/docker-entrypoint-initdb.d"
