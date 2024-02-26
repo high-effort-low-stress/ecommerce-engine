@@ -8,22 +8,9 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {
 
-//    default CreateCustomerAccountDTO.Request toDTO (CustomerEntity entity) {
-//        if (entity == null)
-//            return null;
-//        CreateCustomerAccountDTO.Request dto = new CreateCustomerAccountDTO.Request();
-//        dto.setName(entity.getName());
-//        dto.setDocument(entity.getDocument());
-//        dto.setEmail(entity.getEmail());
-//        dto.setPassword(entity.getPassword());
-//        dto.setPhoneNumber(entity.getPhoneNumber());
-//        return dto;
-//    }
-//
-//    CreateCustomerAccountDTO toCustomerDTO(CustomerEntity entity);
-//    CreateCustomerAccountDTO toCustomerDTO(CreateCustomerAccountDTO.Request request);
-//    CustomerEntity toEntity (CreateCustomerAccountDTO dto);
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
-
     CreateCustomerAccountDTO toDto (CustomerEntity entity);
+    CustomerEntity toRequestEntity (CreateCustomerAccountDTO.Request request);
+    CustomerEntity toResponseEntity (CreateCustomerAccountDTO.Response response);
+    CustomerEntity toEntity (CreateCustomerAccountDTO dto);
 }

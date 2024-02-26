@@ -8,14 +8,14 @@ import com.hels.ecommerceengine.modules.customer.repository.ICustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @RequiredArgsConstructor
 @Service
 public class CreateCustomerAccountService {
-//    private final ICustomerRepository repository;
-//    private final CustomerMapper mapper;
-//    public CustomerEntity execute (CreateCustomerAccountDTO dto) {
-//        CustomerEntity customer = mapper.toEntity(dto);
-//
-//        return repository.save(customer);
-//    }
+    private final ICustomerRepository repository;
+    private final CustomerMapper mapper;
+    public CustomerEntity execute (CreateCustomerAccountDTO.Request dto) {
+        return repository.save(mapper.toRequestEntity(dto));
+    }
 }
