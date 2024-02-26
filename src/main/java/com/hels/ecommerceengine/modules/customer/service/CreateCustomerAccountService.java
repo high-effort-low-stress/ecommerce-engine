@@ -8,8 +8,6 @@ import com.hels.ecommerceengine.modules.customer.repository.ICustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @RequiredArgsConstructor
 @Service
 public class CreateCustomerAccountService {
