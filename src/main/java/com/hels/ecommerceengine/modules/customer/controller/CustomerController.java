@@ -3,6 +3,7 @@ package com.hels.ecommerceengine.modules.customer.controller;
 import com.hels.ecommerceengine.modules.customer.dto.CreateCustomerAccountDTO;
 import com.hels.ecommerceengine.modules.customer.entity.CustomerEntity;
 import com.hels.ecommerceengine.modules.customer.service.CreateCustomerAccountService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ public class CustomerController {
     private final CreateCustomerAccountService createCustomerAccountService;
 
     @PostMapping
-    public CreateCustomerAccountDTO.Response customerCreateAccount (@RequestBody CreateCustomerAccountDTO.Request requestBody) {
+    public CreateCustomerAccountDTO.Response customerCreateAccount (@Valid @RequestBody CreateCustomerAccountDTO.Request requestBody) {
         CustomerEntity customer = createCustomerAccountService.execute(requestBody);
 
         return new CreateCustomerAccountDTO.Response(customer.getId().toString());

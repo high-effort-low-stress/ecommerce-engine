@@ -9,10 +9,10 @@ import com.hels.ecommerceengine.modules.customer.repository.ICustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Objects;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -20,6 +20,8 @@ public class CreateCustomerAccountService {
     private final ICustomerRepository repository;
     private final CustomerMapper mapper;
     public CustomerEntity execute (CreateCustomerAccountDTO.Request dto) {
+        findDuplicates(dto.getDocument(), dto.getEmail(), dto.getPhoneNumber());
+        validateLegalAge(dto.getBirthDate());
         return repository.save(mapper.toRequestEntity(dto));
     }
 
@@ -31,6 +33,14 @@ public class CreateCustomerAccountService {
 
         if (Period.between(birthDate, currentDate).getYears() < 18)
             throw new ApiException("User must be 18+ years old");
+    }
+
+    private void findDuplicates(String document, String email, String phoneNumber) {
+        Optional<CustomerEntity> customers = repository.findByDocumentAndEmailAndPhoneNumber(document, email,
+                phoneNumber);
+
+        if (customers.isPresent())
+            throw new ApiException("User already registered.");
     }
 
 }
