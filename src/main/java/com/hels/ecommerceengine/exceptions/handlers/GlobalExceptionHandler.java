@@ -1,7 +1,7 @@
 package com.hels.ecommerceengine.exceptions.handlers;
 
 import com.hels.ecommerceengine.exceptions.ApiException;
-import com.hels.ecommerceengine.exceptions.UnauthorizedException
+import com.hels.ecommerceengine.exceptions.UnauthorizedException;
 import com.hels.ecommerceengine.exceptions.responses.StandardError;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

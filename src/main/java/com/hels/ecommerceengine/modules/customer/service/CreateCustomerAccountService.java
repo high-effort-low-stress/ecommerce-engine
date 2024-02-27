@@ -1,6 +1,7 @@
 package com.hels.ecommerceengine.modules.customer.service;
 
 
+import com.hels.ecommerceengine.exceptions.ApiException;
 import com.hels.ecommerceengine.modules.customer.dto.CreateCustomerAccountDTO;
 import com.hels.ecommerceengine.modules.customer.entity.CustomerEntity;
 import com.hels.ecommerceengine.modules.customer.mapper.CustomerMapper;
