@@ -22,7 +22,10 @@ public class CreateCustomerAccountService {
     public CustomerEntity execute (CreateCustomerAccountDTO.Request dto) {
         findDuplicates(dto.getDocument(), dto.getEmail(), dto.getPhoneNumber());
         validateLegalAge(dto.getBirthDate());
-        return repository.save(mapper.toRequestEntity(dto));
+
+        CustomerEntity customer = mapper.toEntity(dto);
+
+        return repository.save(customer);
     }
 
     private void validateLegalAge(LocalDate birthDate) {
@@ -32,15 +35,14 @@ public class CreateCustomerAccountService {
             throw new RuntimeException("Birth date can't be null");
 
         if (Period.between(birthDate, currentDate).getYears() < 18)
-            throw new ApiException("User must be 18+ years old");
+            throw new ApiException("Customer must be 18+ years old");
     }
 
-    private void findDuplicates(String document, String email, String phoneNumber) {
+    private void findDuplicates(String document, String email, String phoneNumber)  {
         Optional<CustomerEntity> customers = repository.findByDocumentAndEmailAndPhoneNumber(document, email,
                 phoneNumber);
-
         if (customers.isPresent())
-            throw new ApiException("User already registered.");
+            throw new ApiException("User already registered");
     }
 
 }
