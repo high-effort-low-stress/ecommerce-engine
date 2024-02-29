@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreateCustomerAccountDTO {
+public class CreateCustomerDto {
 
     @ToString
     @Getter

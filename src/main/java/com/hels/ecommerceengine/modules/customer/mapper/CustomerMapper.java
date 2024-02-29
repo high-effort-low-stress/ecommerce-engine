@@ -1,16 +1,16 @@
 package com.hels.ecommerceengine.modules.customer.mapper;
 
-import com.hels.ecommerceengine.modules.customer.dto.CreateCustomerAccountDTO;
+import com.hels.ecommerceengine.modules.customer.dto.CreateCustomerDto;
 import com.hels.ecommerceengine.modules.customer.entity.CustomerEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface CustomerMapper {
 
-    default CreateCustomerAccountDTO.Request toEntity (CustomerEntity entity) {
+    default CreateCustomerDto.Request toEntity (CustomerEntity entity) {
         if (entity == null)
             return null;
-        CreateCustomerAccountDTO.Request dto = new CreateCustomerAccountDTO.Request();
+        CreateCustomerDto.Request dto = new CreateCustomerDto.Request();
         dto.setName(entity.getName());
         dto.setDocument(entity.getDocument());
         dto.setEmail(entity.getEmail());
@@ -19,5 +19,5 @@ public interface CustomerMapper {
         dto.setPhoneNumber(entity.getPhoneNumber());
         return dto;
     }
-    CustomerEntity toEntity(CreateCustomerAccountDTO.Request request);
+    CustomerEntity toEntity(CreateCustomerDto.Request request);
 }
