@@ -21,13 +21,13 @@ public class CustomerEntity {
     private Long id;
     @Column(name = "name", length = 55, nullable = false)
     private String name;
-    @Column(name = "document", length = 11, nullable = false)
+    @Column(name = "document", length = 11, nullable = false, unique = true)
     private String document;
-    @Column(name = "email", length = 30, nullable = false)
+    @Column(name = "email", length = 30, nullable = false, unique = true)
     private String email;
     @Column(name = "password", length = 20, nullable = false)
     private String password;
-    @Column(name = "phone_number", length = 13, nullable = false)
+    @Column(name = "phone_number", length = 13, nullable = false, unique = true)
     private String phoneNumber;
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
