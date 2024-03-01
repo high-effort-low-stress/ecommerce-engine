@@ -9,27 +9,35 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
+import java.time.*;
 import java.util.Optional;
 
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 
-public class CreateCostumerAccountServiceTest {
+public class CreateCostumerServiceTest {
     private final ICustomerRepository repository = mock(ICustomerRepository.class);
     private final CustomerMapper mapper = mock(CustomerMapper.class);
-    private final CreateCustomerService service = new CreateCustomerService(repository, mapper);
+    private final Clock clock =
+            Clock.fixed(
+                    LocalDate.of(2024, Month.FEBRUARY, 1).atStartOfDay().toInstant(ZoneOffset.UTC),
+                    ZoneId.systemDefault()
+            );
+    private final CreateCustomerService service = new CreateCustomerService(repository, mapper,clock);
 
 
     @Test
     @DisplayName("Should throw if age is under 18 years old")
     void shouldThrowIfAgeIsUnder18YearsOld() {
         CreateCustomerDto.Request customerRequest = sampleCreateCustomerAccountDtoRequest();
-        customerRequest.setBirthDate(LocalDate.of(2020,1,1));
+        customerRequest.setBirthDate(LocalDate.of(2020,Month.FEBRUARY,1));
 
-        ApiException exception = Assertions.assertThrows(ApiException.class, () -> service.execute(customerRequest));
+        ApiException exception = Assertions.assertThrows(ApiException.class,
+                () -> service.execute(customerRequest));
 
-        Assertions.assertEquals("Customer must be 18+ years old", exception.getMessage());
+        verify(repository, times(0)).save(any());
+        assertEquals("Customer must be 18+ years old", exception.getMessage());
     }
     @Test
     @DisplayName("Should throw if birth date is null")
@@ -40,33 +48,38 @@ public class CreateCostumerAccountServiceTest {
         RuntimeException exception = Assertions.assertThrows(RuntimeException.class,
                 () -> service.execute(customerRequest));
 
-        Assertions.assertEquals("Birth date can't be null", exception.getMessage());
+        verify(repository, never()).save(any());
+        assertEquals("Birth date can't be null", exception.getMessage());
     }
 
     @Test
     @DisplayName("Should throw if document, email or phone number is duplicated")
     void shouldThrowIfDocumentEmailOrPhoneNumberIsDuplicated() {
-        CreateCustomerDto.Request customerRequest= sampleCreateCustomerAccountDtoRequest();
+        CreateCustomerDto.Request customerRequest = sampleCreateCustomerAccountDtoRequest();
+        Optional<CustomerEntity> optionalCustomerEntity = Optional.of(new CustomerEntity());
 
-        var optionalCustomer = Optional.of(new CustomerEntity());
+        doReturn(optionalCustomerEntity).when(repository).
+                findByDocumentAndEmailAndPhoneNumber(anyString(), anyString(), anyString());
+        ApiException exception = Assertions.assertThrows(ApiException.class,
+                () -> service.execute(customerRequest));
 
-        doReturn(optionalCustomer).when(repository).findByDocumentAndEmailAndPhoneNumber(anyString(), anyString(), anyString());
-
-        ApiException exception = Assertions.assertThrows(ApiException.class, () -> service.execute(customerRequest));
-
-        Assertions.assertEquals("Customer already registered", exception.getMessage());
+        verify(repository, never()).save(any());
+        assertEquals("Customer already registered", exception.getMessage());
     }
 
     @Test
     @DisplayName("Should save customer if no errors were found")
     void shouldCreateCustomerAccountIfNoErrorsWereFound() {
+        CustomerEntity entity = new CustomerEntity();
+        entity.setId(1L);
+        CreateCustomerDto.Request request = sampleCreateCustomerAccountDtoRequest();
 
-        doReturn(new CustomerEntity()).when(repository).save(any());
+        doReturn(entity).when(repository).save(any());
+        CustomerEntity customer = service.execute(request);
 
-        service.execute(sampleCreateCustomerAccountDtoRequest());
-
-        Assertions.assertNotNull(sampleCreateCustomerAccountDtoRequest());
         verify(repository, times(1)).save(any());
+        assertNotNull(request);
+        assertEquals(1L ,customer.getId());
     }
 
     private CreateCustomerDto.Request sampleCreateCustomerAccountDtoRequest() {
@@ -76,9 +89,7 @@ public class CreateCostumerAccountServiceTest {
                 "email@email.com",
                 "password",
                 "5521987654321",
-                LocalDate.of(2000,1,1)
+                LocalDate.of(2000,Month.FEBRUARY,1)
         );
     }
-
-
 }

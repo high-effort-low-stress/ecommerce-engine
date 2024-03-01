@@ -14,9 +14,9 @@ CREATE TABLE ecommerce.customer (
 
 );
 
-CREATE UNIQUE INDEX unq_document_active ON customer(document) WHERE is_active is true;
-CREATE UNIQUE INDEX unq_email_active ON customer(email) WHERE is_active is true;
-CREATE UNIQUE INDEX unq_phone_number_active ON customer(phone_number) WHERE is_active is true;
+CREATE UNIQUE INDEX unq_document_active ON customer(document);
+CREATE UNIQUE INDEX unq_email_active ON customer(email);
+CREATE UNIQUE INDEX unq_phone_number_active ON customer(phone_number);
 
 CREATE TABLE ecommerce.address (
 	id BIGSERIAL NOT NULL,
