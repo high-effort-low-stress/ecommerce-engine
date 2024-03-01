@@ -3,6 +3,7 @@ package com.hels.ecommerceengine.modules.customer.controller;
 import com.hels.ecommerceengine.modules.customer.dto.CreateCustomerDto;
 import com.hels.ecommerceengine.modules.customer.dto.GetCustomerDto;
 import com.hels.ecommerceengine.modules.customer.entity.CustomerEntity;
+import com.hels.ecommerceengine.modules.customer.mapper.CustomerMapper;
 import com.hels.ecommerceengine.modules.customer.service.CreateCustomerService;
 import com.hels.ecommerceengine.modules.customer.service.GetCustomerService;
 import jakarta.validation.Valid;
@@ -16,6 +17,7 @@ public class CustomerController {
 
     private final CreateCustomerService createCustomerService;
     private final GetCustomerService getCustomerService;
+    private final CustomerMapper mapper;
 
     @PostMapping
     public CreateCustomerDto.Response createAccount(@Valid @RequestBody CreateCustomerDto.Request requestBody) {
@@ -28,7 +30,6 @@ public class CustomerController {
     public GetCustomerDto.Response getCustomer (@PathVariable Long id) {
         CustomerEntity customer = getCustomerService.execute(id);
 
-        return new GetCustomerDto.Response(customer.getName(), customer.getDocument(),
-                customer.getEmail(), customer.getPhoneNumber(), customer.getBirthDate());
+        return mapper.entityToGetCustomerDtoResponse(customer);
     }
 }
