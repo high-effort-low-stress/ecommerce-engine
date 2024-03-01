@@ -14,5 +14,11 @@ public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long>
             "WHERE document=:document AND email=:email AND phone_number=:phoneNumber AND is_active=true",
             nativeQuery = true)
     Optional<CustomerEntity> findByDocumentAndEmailAndPhoneNumber(String document, String email, String phoneNumber);
+
+    @Override
+    @Query(value = "SELECT * FROM ecommerce.customer " +
+            "WHERE id=:id AND is_active=true",
+    nativeQuery = true)
+    Optional<CustomerEntity> findById(Long id);
 }
 
