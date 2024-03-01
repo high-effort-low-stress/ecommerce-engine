@@ -9,6 +9,7 @@ import com.hels.ecommerceengine.modules.customer.repository.ICustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Objects;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class CreateCustomerService {
     private final ICustomerRepository repository;
     private final CustomerMapper mapper;
+    private final Clock clock;
     public CustomerEntity execute (CreateCustomerDto.Request dto) {
         findDuplicates(dto.getDocument(), dto.getEmail(), dto.getPhoneNumber());
         validateLegalAge(dto.getBirthDate());
@@ -29,7 +31,7 @@ public class CreateCustomerService {
     }
 
     private void validateLegalAge(LocalDate birthDate) {
-        LocalDate currentDate = LocalDate.now();
+        LocalDate currentDate = LocalDate.now(clock);
 
         if (Objects.isNull(birthDate))
             throw new RuntimeException("Birth date can't be null");
