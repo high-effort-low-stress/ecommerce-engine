@@ -14,7 +14,7 @@ public class InactiveCustomerService {
     private final ICustomerRepository repository;
 
     public void execute(Long id) {
-        CustomerEntity customer = repository.inactiveById(id).orElse(null);
+        CustomerEntity customer = repository.findById(id).orElse(null);
 
         if (Objects.isNull(customer))
             throw new ApiException("Customer not found");

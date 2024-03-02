@@ -22,14 +22,5 @@ public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long>
             @Param("phoneNumber") String phoneNumber
     );
 
-    @Query(
-            value = "SELECT * FROM ecommerce.customer " +
-                    "WHERE id=:id AND is_active=true",
-            nativeQuery = true
-    )
-    Optional<CustomerEntity> inactiveById(
-            @Param("id") Long id
-    );
-
 }
 
