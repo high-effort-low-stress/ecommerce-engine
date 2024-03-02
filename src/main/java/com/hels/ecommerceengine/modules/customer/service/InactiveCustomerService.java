@@ -13,7 +13,7 @@ import java.util.Objects;
 public class InactiveCustomerService {
     private final ICustomerRepository repository;
 
-    public CustomerEntity execute(Long id) {
+    public void execute(Long id) {
         CustomerEntity customer = repository.inactiveById(id).orElse(null);
 
         if (Objects.isNull(customer))
@@ -21,7 +21,7 @@ public class InactiveCustomerService {
 
         customer.setActive(false);
 
-        return repository.save(customer);
+        repository.save(customer);
     }
 
 
