@@ -1,11 +1,9 @@
 package com.hels.ecommerceengine.modules.customer.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
