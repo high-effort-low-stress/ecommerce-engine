@@ -24,7 +24,7 @@ public interface ICustomerRepository extends JpaRepository<CustomerEntity, Long>
 
     @Query(
             value = "SELECT * FROM ecommerce.customer " +
-                    "WHERE id=:id AND isActive=true",
+                    "WHERE id=:id AND is_active=true",
             nativeQuery = true
     )
     Optional<CustomerEntity> inactiveById(
