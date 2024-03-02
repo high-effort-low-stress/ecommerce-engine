@@ -40,7 +40,7 @@ public class CustomerController {
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void inactiveCustomer (@PathVariable("id") Long id) {
-        CustomerEntity customer = inactiveCustomerService.execute(id);
+        inactiveCustomerService.execute(id);
     }
 
 }
