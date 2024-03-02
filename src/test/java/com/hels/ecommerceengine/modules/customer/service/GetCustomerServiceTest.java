@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 public class GetCustomerServiceTest {
     private final ICustomerRepository repository = mock(ICustomerRepository.class);
-    private final CustomerMapper mapper = mock(CustomerMapper.class);
     private final GetCustomerService service = new GetCustomerService(repository);
 
     @Test
