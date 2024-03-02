@@ -2,7 +2,6 @@ package com.hels.ecommerceengine.modules.customer.controller;
 
 import com.hels.ecommerceengine.modules.customer.dto.CreateCustomerDto;
 import com.hels.ecommerceengine.modules.customer.dto.GetCustomerDto;
-import com.hels.ecommerceengine.modules.customer.dto.InactiveCustomerDto;
 import com.hels.ecommerceengine.modules.customer.entity.CustomerEntity;
 import com.hels.ecommerceengine.modules.customer.mapper.CustomerMapper;
 import com.hels.ecommerceengine.modules.customer.service.CreateCustomerService;
